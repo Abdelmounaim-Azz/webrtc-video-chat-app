@@ -115,8 +115,8 @@ body {
 }
 
 .personal_code_copy_button {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
   background: white;
   transition: 0.5s;

@@ -11,14 +11,12 @@ app.get("/", (req, res) => {
 let connClients = [];
 io.on("connection", (socket) => {
   connClients.push(socket.id);
-  console.log(connClients);
   socket.on("disconnect", () => {
     console.log("client disconnected");
     const newConnClients = connClients.filter((peerSocketId) => {
       peerSocketId !== socket.id;
     });
     connClients = newConnClients;
-    console.log(connClients);
   });
 });
 server.listen(PORT, () => {

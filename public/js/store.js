@@ -12,7 +12,6 @@ export const setSocketId = (socketId) => {
     ...state,
     socketId,
   };
-  console.log(state);
 };
 
 export const setLocalStream = (stream) => {
