@@ -8,8 +8,18 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
+let connClients = [];
 io.on("connection", (socket) => {
-  console.log(`client connected to socket.io server with id:${socket.id}`);
+  connClients.push(socket.id);
+  console.log(connClients);
+  socket.on("disconnect", () => {
+    console.log("client disconnected");
+    const newConnClients = connClients.filter((peerSocketId) => {
+      peerSocketId !== socket.id;
+    });
+    connClients = newConnClients;
+    console.log(connClients);
+  });
 });
 server.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
