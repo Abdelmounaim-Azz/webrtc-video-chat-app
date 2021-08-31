@@ -295,8 +295,7 @@ body {
   height: calc(100% - 70px);
   margin: 30px 40px 40px 40px;
   border-radius: 15px;
-  background: linear-gradient(168.68deg, #f4a261 1.12%, #ff5c0a 50%);
-  /* background-image: url('../utils/images/logo.png'); */
+  background: linear-gradient(168.68deg, #4db748 1.12%, #039447 100%);
 }
 
 .videos_placeholder {

@@ -12,7 +12,7 @@
             <div>
                 <div class='description_container'>
                     <p class='description_container_paragraph'>
-                        Talk with other user by passing his personal code or talk with strangers!
+                        Call someone you know by passing his personal code or talk to strangers!
                     </p>
                 </div>
                 <div class='personal_code_container'>
@@ -56,7 +56,7 @@
                 </div>
                 <div class='checkbox_container'>
                     <div class='checkbox_connection' id='allow_strangers_checkbox'>
-                        <img id='allow_strangers_checkbox_image' class='' src='./utils/images/check.png'></img>
+                        <img id='allow_strangers_checkbox_image' class='display_none' src='./utils/images/check.png'></img>
                     </div>
                     <p class='checkbox_container_paragraph'>Allow connection from strangers</p>
                 </div>
@@ -117,6 +117,8 @@
         </div>    
         </div>
         <script src='/socket.io/socket.io.js'></script>
+        <script src='./js/ui.js' type='module'></script>
+        <script src='./js/wss.js' type='module'></script>
         <script src='./js/store.js' type='module'></script>
         <script src='./js/main.js' type='module'></script>
     </body>
