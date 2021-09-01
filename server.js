@@ -26,9 +26,9 @@ io.on("connection", (socket) => {
   });
   socket.on("disconnect", () => {
     console.log("client disconnected");
-    const newConnClients = connClients.filter((peerSocketId) => {
-      peerSocketId !== socket.id;
-    });
+    const newConnClients = connClients.filter(
+      (peerSocketId) => peerSocketId !== socket.id
+    );
     connClients = newConnClients;
   });
 });

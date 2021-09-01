@@ -11,5 +11,12 @@ export const showIncomingCallDial = (
 ) => {
   const callTypeInfo =
     callType === constants.callType.CHAT_PERSONAL_CODE ? "Chat" : "Video";
-  const incomingCallDial = elements.getIncomingCallDial();
+  const incomingCallDial = elements.getIncomingCallDial(
+    callTypeInfo,
+    acceptCallHandler,
+    rejectCallHandler
+  );
+  const dialog = document.getElementById("dialog");
+  dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
+  dialog.appendChild(incomingCallDial);
 };
