@@ -24,6 +24,10 @@ io.on("connection", (socket) => {
       io.to(calleePersonalCode).emit("pre-offer", data);
     }
   });
+  socket.on("pre-offer-answer", (data) => {
+    console.log("pre offer answer came");
+    console.log(data);
+  });
   socket.on("disconnect", () => {
     console.log("client disconnected");
     const newConnClients = connClients.filter(

@@ -34,11 +34,21 @@ export const handlePreOffer = (data) => {
   }
 };
 const acceptCallHandler = () => {
-  console.log("call accepter");
+  console.log("call accepted");
+  sendPreOfferAnswer(constants.preOfferAnswer.CALL_ACCEPTED);
 };
 const rejectCallHandler = () => {
   console.log("call rejected");
+  sendPreOfferAnswer(constants.preOfferAnswer.CALL_REJECTED);
 };
 const callingDialRejectCallHandler = () => {
   console.log("rejecting call");
+};
+
+const sendPreOfferAnswer = (preOfferAnswer) => {
+  const data = {
+    callerSocketId: connectedUserDetails.socketId,
+    preOfferAnswer,
+  };
+  wss.sendPreOfferAnswer(data);
 };

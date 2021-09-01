@@ -42,6 +42,12 @@ export const getIncomingCallDial = (
   dialogContent.appendChild(title);
   dialogContent.appendChild(ImgContainer);
   dialogContent.appendChild(buttonContainer);
+  acceptCallButton.addEventListener('click',()=>{
+    acceptCallHandler()
+  })
+  rejectCallButton.addEventListener('click',()=>{
+    rejectCallHandler()
+  })
   return dialog;
 };
 
