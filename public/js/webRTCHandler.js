@@ -59,15 +59,15 @@ export const handlePreOfferAnswer = (data) => {
   ui.removeAllDials();
   if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
     //dial with callee not found
-    ui.showInfoDial(preOfferAnswer);
+    ui.showInfoDialog(preOfferAnswer);
   }
   if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE) {
     //show dial that user is busy not able to answer
-     ui.showInfoDial(preOfferAnswer);
+    ui.showInfoDialog(preOfferAnswer);
   }
   if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED) {
     //show dial that call is rejected
-     ui.showInfoDial(preOfferAnswer);
+    ui.showInfoDialog(preOfferAnswer);
   }
   if (preOfferAnswer === constants.preOfferAnswer.CALL_ACCEPTED) {
     //send webrtc offer

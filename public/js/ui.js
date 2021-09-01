@@ -32,31 +32,36 @@ export const removeAllDials = () => {
   dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
 };
 
-export const showInfoDial = (preOfferAnswer) => {
-  let infoDial = null;
+export const showInfoDialog = (preOfferAnswer) => {
+  let infoDialog = null;
+
   if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED) {
-    infoDial = elements.getInfoDial(
-      "Call Rejected",
+    infoDialog = elements.getInfoDialog(
+      "Call rejected",
       "Callee rejected your call"
     );
   }
+
   if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
-    infoDial = elements.getInfoDial(
-      "Call Rejected",
-      "Callee rejected your call"
+    infoDialog = elements.getInfoDialog(
+      "Callee not found",
+      "Personal code belongs to no user."
     );
   }
+
   if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE) {
-    infoDial = elements.getInfoDial(
-      "Call is not possible now.",
-      "Callee is busy.please try another time."
+    infoDialog = elements.getInfoDialog(
+      "Call is not possible now",
+      "Callee is on another call. Try againg later"
     );
   }
-  if (infoDial) {
-    const dial = document.getElementById("dialog");
-    dial.appendChild(infoDial);
+
+  if (infoDialog) {
+    const dialog = document.getElementById("dialog");
+    dialog.appendChild(infoDialog);
+
     setTimeout(() => {
-      removeAllDials();
+      removeAllDialogs();
     }, [4000]);
   }
 };
