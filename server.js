@@ -11,6 +11,19 @@ app.get("/", (req, res) => {
 let connClients = [];
 io.on("connection", (socket) => {
   connClients.push(socket.id);
+  socket.on("pre-offer", (data) => {
+    const {callType, calleePersonalCode} = data;
+    const connectedPeer = connClients.find(
+      (peerSocketId) => peerSocketId === calleePersonalCode
+    );
+    if (connectedPeer) {
+      const data = {
+        callerSocketId: socket.id,
+        callType,
+      };
+      io.to(calleePersonalCode).emit("pre-offer", data);
+    }
+  });
   socket.on("disconnect", () => {
     console.log("client disconnected");
     const newConnClients = connClients.filter((peerSocketId) => {
