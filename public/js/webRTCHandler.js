@@ -1,4 +1,7 @@
 import * as wss from "./wss.js";
+import * as constants from "./constants.js";
+import * as ui from "./ui.js";
+let connectedUserDetails;
 export const sendPreOffer = (callType, calleePersonalCode) => {
   const data = {
     callType,
@@ -8,5 +11,21 @@ export const sendPreOffer = (callType, calleePersonalCode) => {
 };
 
 export const handlePreOffer = (data) => {
-  console.log(data);
+  const {callType, callerSocketId} = data;
+  connectedUserDetails = {
+    socketId: callerSocketId,
+    callType,
+  };
+  if (
+    callType === constants.callType.CHAT_PERSONAL_CODE ||
+    callType === constants.callType.VIDEO_PERSONAL_CODE
+  ) {
+    ui.showIncomingCallDial(callType, acceptCallHandler, rejectCallHandler);
+  }
+};
+const acceptCallHandler = () => {
+  console.log("call accepter");
+};
+const rejectCallHandler = () => {
+  console.log("call rejected");
 };
