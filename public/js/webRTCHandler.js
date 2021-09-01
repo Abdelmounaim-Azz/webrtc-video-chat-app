@@ -50,5 +50,23 @@ const sendPreOfferAnswer = (preOfferAnswer) => {
     callerSocketId: connectedUserDetails.socketId,
     preOfferAnswer,
   };
+  ui.removeAllDials();
   wss.sendPreOfferAnswer(data);
+};
+
+export const handlePreOfferAnswer = (data) => {
+  const {preOfferAnswer, callerSocketId} = data;
+  ui.removeAllDials();
+  if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
+    //dial with callee not found
+  }
+  if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE) {
+    //show dial that user is busy not able to answer
+  }
+  if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED) {
+    //show dial that call is rejected
+  }
+  if (preOfferAnswer === constants.preOfferAnswer.CALL_ACCEPTED) {
+    //send webrtc offer
+  }
 };

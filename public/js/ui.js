@@ -26,3 +26,8 @@ export const showCallingDial = (rejectCallHandler) => {
   dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
   dialog.appendChild(callingDial);
 };
+
+export const removeAllDials = () => {
+  const dialog = document.getElementById("dialog");
+  dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
+};
