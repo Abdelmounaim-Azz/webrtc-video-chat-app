@@ -31,3 +31,32 @@ export const removeAllDials = () => {
   const dialog = document.getElementById("dialog");
   dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
 };
+
+export const showInfoDial = (preOfferAnswer) => {
+  let infoDial = null;
+  if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED) {
+    infoDial = elements.getInfoDial(
+      "Call Rejected",
+      "Callee rejected your call"
+    );
+  }
+  if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
+    infoDial = elements.getInfoDial(
+      "Call Rejected",
+      "Callee rejected your call"
+    );
+  }
+  if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE) {
+    infoDial = elements.getInfoDial(
+      "Call is not possible now.",
+      "Callee is busy.please try another time."
+    );
+  }
+  if (infoDial) {
+    const dial = document.getElementById("dialog");
+    dial.appendChild(infoDial);
+    setTimeout(() => {
+      removeAllDials();
+    }, [4000]);
+  }
+};
