@@ -3,11 +3,21 @@ import * as constants from "./constants.js";
 import * as ui from "./ui.js";
 let connectedUserDetails;
 export const sendPreOffer = (callType, calleePersonalCode) => {
-  const data = {
+  connectedUserDetails = {
+    socketId: calleePersonalCode,
     callType,
-    calleePersonalCode,
   };
-  wss.sendPreOffer(data);
+  if (
+    callType === constants.callType.CHAT_PERSONAL_CODE ||
+    callType === constants.callType.VIDEO_PERSONAL_CODE
+  ) {
+    const data = {
+      callType,
+      calleePersonalCode,
+    };
+    ui.showCallingDial(callingDialRejectCallHandler);
+    wss.sendPreOffer(data);
+  }
 };
 
 export const handlePreOffer = (data) => {
@@ -28,4 +38,7 @@ const acceptCallHandler = () => {
 };
 const rejectCallHandler = () => {
   console.log("call rejected");
+};
+const callingDialRejectCallHandler = () => {
+  console.log("rejecting call");
 };

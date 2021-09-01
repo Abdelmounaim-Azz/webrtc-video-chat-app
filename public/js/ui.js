@@ -20,3 +20,9 @@ export const showIncomingCallDial = (
   dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
   dialog.appendChild(incomingCallDial);
 };
+export const showCallingDial = (rejectCallHandler) => {
+  const callingDial = elements.getCallingDial(rejectCallHandler);
+  const dialog = document.getElementById("dialog");
+  dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
+  dialog.appendChild(callingDial);
+};
