@@ -6,7 +6,7 @@ import * as constants from "./constants.js";
 //Initialize the socket io connection
 const socket = io("/");
 wss.registerSocketEvents(socket);
-
+webRTCHandler.getLocalPreview();
 //copy btn functionnality
 const personalCodeCopyBtn = document.getElementById(
   "personal_code_copy_button"

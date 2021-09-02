@@ -4,6 +4,13 @@ export const updatePersonalCode = (personalCode) => {
   const personalCodepara = document.getElementById("personal_code_paragraph");
   personalCodepara.innerHTML = personalCode;
 };
+export const updateLocalVideo = (stream) => {
+  const localVid = document.getElementById("local_video");
+  localVid.srcObject = stream;
+  localVid.addEventListener("loadedmetadata", () => {
+    localVid.play();
+  });
+};
 export const showIncomingCallDial = (
   callType,
   acceptCallHandler,
