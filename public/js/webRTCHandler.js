@@ -3,10 +3,18 @@ import * as store from "./store.js";
 import * as constants from "./constants.js";
 import * as ui from "./ui.js";
 let connectedUserDetails;
+let peerConnection;
 const defaultConstraints = {
   audio: true,
   video: true,
 };
+const config={
+  iceServers=[
+    {
+      urls:"stun:stun.l.google.com:13902"
+    }
+  ]
+}
 export const getLocalPreview = () => {
   navigator.mediaDevices
     .getUserMedia(defaultConstraints)
@@ -18,6 +26,37 @@ export const getLocalPreview = () => {
       console.log(err);
     });
 };
+const createPeerConnection=()=>{
+  peerConnection=new RTCPeerConnection(config);
+  peerConnection.onicecandidate=(event)=>{
+    console.log('getting ice candidates from ice server');
+    if(event.candidate){
+      //send our ice candidates to other peer
+    }
+  }
+  peerConnection.oniceconnectionstatechange=(event)=>{
+    if(peerConnection.connectionState==='connected'){
+      console.log('connection succeeded with other peer')
+    }
+  }
+  //receiving tracks
+  const remoteStream=new MediaStream();
+  store.setRemoteStream(remoteStream);
+  ui.updateVideoStream(remoteStream);
+  peerConnection.ontrack=(event)=>{
+    remoteStream.addTrack(event.track)
+  }
+  //add our stream to peer connection
+  if (
+    connectedUserDetails.callType === constants.callType.VIDEO_PERSONAL_CODE
+  ){
+    const localStream=store.getState().locaStream;
+    for(const track of localStream.getTracks()){
+      peerConnection.addTrack(track,localStream);
+    }
+  }
+
+}
 export const sendPreOffer = (callType, calleePersonalCode) => {
   connectedUserDetails = {
     socketId: calleePersonalCode,
