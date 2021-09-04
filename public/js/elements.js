@@ -1,4 +1,4 @@
-export const getIncomingCallDial = (
+export const getIncomingCallDialog = (
   callTypeInfo,
   acceptCallHandler,
   rejectCallHandler
@@ -9,15 +9,18 @@ export const getIncomingCallDial = (
   const dialogContent = document.createElement("div");
   dialogContent.classList.add("dialog_content");
   dialog.appendChild(dialogContent);
+
   const title = document.createElement("p");
   title.classList.add("dialog_title");
   title.innerHTML = `Incoming ${callTypeInfo} Call`;
-  const ImgContainer = document.createElement("div");
-  ImgContainer.classList.add("dialog_image_container");
+
+  const imageContainer = document.createElement("div");
+  imageContainer.classList.add("dialog_image_container");
   const image = document.createElement("img");
   const avatarImagePath = "./utils/images/dialogAvatar.png";
   image.src = avatarImagePath;
-  ImgContainer.appendChild(image);
+  imageContainer.appendChild(image);
+
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("dialog_button_container");
 
@@ -40,18 +43,21 @@ export const getIncomingCallDial = (
   buttonContainer.appendChild(rejectCallButton);
 
   dialogContent.appendChild(title);
-  dialogContent.appendChild(ImgContainer);
+  dialogContent.appendChild(imageContainer);
   dialogContent.appendChild(buttonContainer);
+
   acceptCallButton.addEventListener("click", () => {
     acceptCallHandler();
   });
+
   rejectCallButton.addEventListener("click", () => {
     rejectCallHandler();
   });
+
   return dialog;
 };
 
-export const getCallingDial = (rejectCallHandler) => {
+export const getCallingDialog = (rejectCallHandler) => {
   const dialog = document.createElement("div");
   dialog.classList.add("dialog_wrapper");
   const dialogContent = document.createElement("div");
@@ -115,4 +121,26 @@ export const getInfoDialog = (dialogTitle, dialogDescription) => {
   dialogContent.appendChild(description);
 
   return dialog;
+};
+
+export const getLeftMessage = (message) => {
+  const messageContainer = document.createElement("div");
+  messageContainer.classList.add("message_left_container");
+  const messageParagraph = document.createElement("p");
+  messageParagraph.classList.add("message_left_paragraph");
+  messageParagraph.innerHTML = message;
+  messageContainer.appendChild(messageParagraph);
+
+  return messageContainer;
+};
+
+export const getRightMessage = (message) => {
+  const messageContainer = document.createElement("div");
+  messageContainer.classList.add("message_right_container");
+  const messageParagraph = document.createElement("p");
+  messageParagraph.classList.add("message_right_paragraph");
+  messageParagraph.innerHTML = message;
+  messageContainer.appendChild(messageParagraph);
+
+  return messageContainer;
 };

@@ -1,42 +1,56 @@
 import * as constants from "./constants.js";
 import * as elements from "./elements.js";
+
 export const updatePersonalCode = (personalCode) => {
-  const personalCodepara = document.getElementById("personal_code_paragraph");
-  personalCodepara.innerHTML = personalCode;
+  const personalCodeParagraph = document.getElementById(
+    "personal_code_paragraph"
+  );
+  personalCodeParagraph.innerHTML = personalCode;
 };
+
 export const updateLocalVideo = (stream) => {
-  const localVid = document.getElementById("local_video");
-  localVid.srcObject = stream;
-  localVid.addEventListener("loadedmetadata", () => {
-    localVid.play();
+  const localVideo = document.getElementById("local_video");
+  localVideo.srcObject = stream;
+
+  localVideo.addEventListener("loadedmetadata", () => {
+    localVideo.play();
   });
 };
-export const showIncomingCallDial = (
+
+export const updateRemoteVideo = (stream) => {
+  const remoteVideo = document.getElementById("remote_video");
+  remoteVideo.srcObject = stream;
+};
+
+export const showIncomingCallDialog = (
   callType,
   acceptCallHandler,
   rejectCallHandler
 ) => {
   const callTypeInfo =
     callType === constants.callType.CHAT_PERSONAL_CODE ? "Chat" : "Video";
-  const incomingCallDial = elements.getIncomingCallDial(
+
+  const incomingCallDialog = elements.getIncomingCallDialog(
     callTypeInfo,
     acceptCallHandler,
     rejectCallHandler
   );
+
+  // removing all dialogs inside HTML dialog element
   const dialog = document.getElementById("dialog");
   dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
-  dialog.appendChild(incomingCallDial);
-};
-export const showCallingDial = (rejectCallHandler) => {
-  const callingDial = elements.getCallingDial(rejectCallHandler);
-  const dialog = document.getElementById("dialog");
-  dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
-  dialog.appendChild(callingDial);
+
+  dialog.appendChild(incomingCallDialog);
 };
 
-export const removeAllDials = () => {
+export const showCallingDialog = (rejectCallHandler) => {
+  const callingDialog = elements.getCallingDialog(rejectCallHandler);
+
+  // removing all dialogs inside HTML dialog element
   const dialog = document.getElementById("dialog");
   dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
+
+  dialog.appendChild(callingDialog);
 };
 
 export const showInfoDialog = (preOfferAnswer) => {
@@ -52,14 +66,14 @@ export const showInfoDialog = (preOfferAnswer) => {
   if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
     infoDialog = elements.getInfoDialog(
       "Callee not found",
-      "Personal code belongs to no user."
+      "Please check personal code"
     );
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE) {
     infoDialog = elements.getInfoDialog(
-      "Call is not possible now",
-      "Callee is on another call. Try againg later"
+      "Call is not possible",
+      "Probably callee is busy. Please try againg later"
     );
   }
 
@@ -72,6 +86,12 @@ export const showInfoDialog = (preOfferAnswer) => {
     }, [4000]);
   }
 };
+
+export const removeAllDialogs = () => {
+  const dialog = document.getElementById("dialog");
+  dialog.querySelectorAll("*").forEach((dialog) => dialog.remove());
+};
+
 export const showCallElements = (callType) => {
   if (callType === constants.callType.CHAT_PERSONAL_CODE) {
     showChatCallElements();
@@ -108,6 +128,38 @@ const showVideoCallElements = () => {
   showElement(newMessageInput);
   //block panel
   disableDashboard();
+};
+
+// ui call buttons
+
+const micOnImgSrc = "./utils/images/mic.png";
+const micOffImgSrc = "./utils/images/micOff.png";
+
+export const updateMicButton = (micActive) => {
+  const micButtonImage = document.getElementById("mic_button_image");
+  micButtonImage.src = micActive ? micOffImgSrc : micOnImgSrc;
+};
+
+const cameraOnImgSrc = "./utils/images/camera.png";
+const cameraOffImgSrc = "./utils/images/cameraOff.png";
+
+export const updateCameraButton = (cameraActive) => {
+  const cameraButtonImage = document.getElementById("camera_button_image");
+  cameraButtonImage.src = cameraActive ? cameraOffImgSrc : cameraOnImgSrc;
+};
+
+// ui messages
+export const appendMessage = (message, right = false) => {
+  const messagesContainer = document.getElementById("messages_container");
+  const messageElement = right
+    ? elements.getRightMessage(message)
+    : elements.getLeftMessage(message);
+  messagesContainer.appendChild(messageElement);
+};
+
+export const clearMessenger = () => {
+  const messagesContainer = document.getElementById("messages_container");
+  messagesContainer.querySelectorAll("*").forEach((n) => n.remove());
 };
 
 // ui helper functions

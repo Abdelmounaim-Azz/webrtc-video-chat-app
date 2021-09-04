@@ -1,21 +1,34 @@
 const express = require("express");
 const http = require("http");
+
 const PORT = process.env.PORT || 3000;
+
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
+
 app.use(express.static("public"));
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
-let connClients = [];
+
+let connectedPeers = [];
+
 io.on("connection", (socket) => {
-  connClients.push(socket.id);
+  connectedPeers.push(socket.id);
+
   socket.on("pre-offer", (data) => {
-    const {callType, calleePersonalCode} = data;
-    const connectedPeer = connClients.find(
+    console.log("pre-offer-came");
+    const {calleePersonalCode, callType} = data;
+    console.log(calleePersonalCode);
+    console.log(connectedPeers);
+    const connectedPeer = connectedPeers.find(
       (peerSocketId) => peerSocketId === calleePersonalCode
     );
+
+    console.log(connectedPeer);
+
     if (connectedPeer) {
       const data = {
         callerSocketId: socket.id,
@@ -29,32 +42,43 @@ io.on("connection", (socket) => {
       io.to(socket.id).emit("pre-offer-answer", data);
     }
   });
+
   socket.on("pre-offer-answer", (data) => {
-    const {preOfferAnswer, callerSocketId} = data;
-    const connectedPeer = connClients.find(
+    const {callerSocketId} = data;
+
+    const connectedPeer = connectedPeers.find(
       (peerSocketId) => peerSocketId === callerSocketId
     );
+
     if (connectedPeer) {
-      io.to(callerSocketId).emit("pre-offer-answer", data);
+      io.to(data.callerSocketId).emit("pre-offer-answer", data);
     }
   });
+
   socket.on("webRTC-signaling", (data) => {
-    const {connectedUserSockerId} = data;
-    const connectedPeer = connClients.find(
-      (peerSocketId) => peerSocketId === connectedUserSockerId
+    const {connectedUserSocketId} = data;
+
+    const connectedPeer = connectedPeers.find(
+      (peerSocketId) => peerSocketId === connectedUserSocketId
     );
+
     if (connectedPeer) {
-      io.to(connectedUserSockerId).emit("webRTC-signaling", data);
+      io.to(connectedUserSocketId).emit("webRTC-signaling", data);
     }
   });
+
   socket.on("disconnect", () => {
-    console.log("client disconnected");
-    const newConnClients = connClients.filter(
+    console.log("user disconnected");
+
+    const newConnectedPeers = connectedPeers.filter(
       (peerSocketId) => peerSocketId !== socket.id
     );
-    connClients = newConnClients;
+
+    connectedPeers = newConnectedPeers;
+    console.log(connectedPeers);
   });
 });
+
 server.listen(PORT, () => {
-  console.log(`server running on port ${PORT}`);
+  console.log(`listening on ${PORT}`);
 });
