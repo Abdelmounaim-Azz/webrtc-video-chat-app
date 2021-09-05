@@ -117,7 +117,7 @@ export const sendPreOffer = (callType, calleePersonalCode) => {
 };
 
 export const handlePreOffer = (data) => {
-  const { callType, callerSocketId } = data;
+  const {callType, callerSocketId} = data;
 
   connectedUserDetails = {
     socketId: callerSocketId,
@@ -160,7 +160,7 @@ const sendPreOfferAnswer = (preOfferAnswer) => {
 };
 
 export const handlePreOfferAnswer = (data) => {
-  const { preOfferAnswer } = data;
+  const {preOfferAnswer} = data;
 
   ui.removeAllDialogs();
 
@@ -282,4 +282,33 @@ export const switchBetweenCameraAndScreenSharing = async (
       );
     }
   }
+};
+
+//Hand Up
+export const handleHangUp = () => {
+  const data = {
+    connectedUserSocketId: connectedUserDetails.socketId,
+  };
+  wss.sendUserHangUp(data);
+  closePeerConnAndResetState();
+};
+
+export const handleConnectedUserHangUp = () => {
+  closePeerConnAndResetState();
+};
+const closePeerConnAndResetState = () => {
+  if (peerConection) {
+    peerConection.close();
+    peerConection = null;
+  }
+  //active mic and cam
+  if (
+    callType === constants.callType.VIDEO_STRANGER ||
+    callType === constants.callType.VIDEO_PERSONAL_CODE
+  ) {
+    store.getState().localStream.getVideoTracks()[0].enabled = true;
+    store.getState().localStream.getAudioTracks()[0].enabled = true;
+  }
+  ui.updateUIAfterHangUp(connectedUserDetails.callType);
+  connectedUserDetails = null;
 };
