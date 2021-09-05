@@ -129,9 +129,11 @@ resumeRecordingButton.addEventListener("click", () => {
 //hang up
 const hangUpBtn = document.getElementById("hang_up_button");
 hangUpBtn.addEventListener("click", () => {
+  console.log("hang up video clicked");
   webRTCHandler.handleHangUp();
 });
 const hangUpChatBtn = document.getElementById("finish_chat_call_button");
 hangUpChatBtn.addEventListener("click", () => {
+  console.log("hang up chat clicked");
   webRTCHandler.handleHangUp();
 });

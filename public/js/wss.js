@@ -22,6 +22,7 @@ export const registerSocketEvents = (socket) => {
     webRTCHandler.handlePreOfferAnswer(data);
   });
   socket.on("user-hang-up", () => {
+    console.log("user hang up event received by client");
     webRTCHandler.handleConnectedUserHangUp();
   });
   socket.on("webRTC-signaling", (data) => {
@@ -55,5 +56,6 @@ export const sendDataUsingWebRTCSignaling = (data) => {
 };
 
 export const sendUserHangUp = (data) => {
+  console.log("send user hang up wss data  emitted to server ");
   socketIO.emit("user-hang-up", data);
 };

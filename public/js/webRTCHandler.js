@@ -286,6 +286,7 @@ export const switchBetweenCameraAndScreenSharing = async (
 
 //Hand Up
 export const handleHangUp = () => {
+  console.log("hanging up...");
   const data = {
     connectedUserSocketId: connectedUserDetails.socketId,
   };
@@ -294,6 +295,7 @@ export const handleHangUp = () => {
 };
 
 export const handleConnectedUserHangUp = () => {
+  console.log("connected peer hanged up");
   closePeerConnAndResetState();
 };
 const closePeerConnAndResetState = () => {
@@ -303,8 +305,8 @@ const closePeerConnAndResetState = () => {
   }
   //active mic and cam
   if (
-    callType === constants.callType.VIDEO_STRANGER ||
-    callType === constants.callType.VIDEO_PERSONAL_CODE
+    connectedUserDetails.callType === constants.callType.VIDEO_STRANGER ||
+    connectedUserDetails.callType === constants.callType.VIDEO_PERSONAL_CODE
   ) {
     store.getState().localStream.getVideoTracks()[0].enabled = true;
     store.getState().localStream.getAudioTracks()[0].enabled = true;
