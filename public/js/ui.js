@@ -16,7 +16,14 @@ export const updateLocalVideo = (stream) => {
     localVideo.play();
   });
 };
-
+export const showVideoCallButtons = () => {
+  const personalCodeVidBtn = document.getElementById(
+    "personal_code_video_button"
+  );
+  const strangerVidBtn = document.getElementById("stranger_video_button");
+  showElement(personalCodeVidBtn);
+  showElement(strangerVidBtn);
+};
 export const updateRemoteVideo = (stream) => {
   const remoteVideo = document.getElementById("remote_video");
   remoteVideo.srcObject = stream;
