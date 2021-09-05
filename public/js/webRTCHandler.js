@@ -332,7 +332,7 @@ const closePeerConnAndResetState = () => {
   connectedUserDetails = null;
 };
 const checkCallAvailability = (callType) => {
-  const callState = store.setCallState().callState;
+  const callState = store.getState().callState;
   if (callState === constants.callState.CALL_AVAILABLE) {
     return true;
   }
