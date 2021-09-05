@@ -157,7 +157,11 @@ const rejectCallHandler = () => {
 };
 
 const callingDialogRejectCallHandler = () => {
-  console.log("rejecting the call");
+  const data = {
+    connectedUserSocketId: connectedUserDetails.socketId,
+  };
+  closePeerConnAndResetState();
+  wss.sendUserHangUp(data);
 };
 
 const sendPreOfferAnswer = (preOfferAnswer, callerSocketId = null) => {
