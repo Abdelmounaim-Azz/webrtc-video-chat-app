@@ -59,6 +59,20 @@ export const showCallingDialog = (rejectCallHandler) => {
 
   dialog.appendChild(callingDialog);
 };
+export const showNoStrangerDial = () => {
+  const infoDial = elements.getInfoDialog(
+    "No stranger available",
+    "Try later."
+  );
+  if (infoDial) {
+    const dialog = document.getElementById("dialog");
+    dialog.appendChild(infoDial);
+
+    setTimeout(() => {
+      removeAllDialogs();
+    }, [4000]);
+  }
+};
 
 export const showInfoDialog = (preOfferAnswer) => {
   let infoDialog = null;
