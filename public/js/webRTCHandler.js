@@ -153,8 +153,8 @@ export const handlePreOffer = (data) => {
     ui.showIncomingCallDialog(callType, acceptCallHandler, rejectCallHandler);
   }
   if (
-    callType === constants.callType.CHAT_PERSONAL_CODE ||
-    callType === constants.callType.VIDEO_PERSONAL_CODE
+    callType === constants.callType.CHAT_STRANGER ||
+    callType === constants.callType.VIDEO_STRANGER
   ) {
     createPeerConnection();
     sendPreOfferAnswer(constants.preOfferAnswer.CALL_ACCEPTED);

@@ -10,6 +10,7 @@ export const getSIdAndConn = (callType) => {
   wss.getStrangerSocketId();
 };
 export const connectWithStranger = (data) => {
+  console.log(data.randomStranger);
   if (data.randomStranger) {
     webRTCHandler.sendPreOffer(strangerCallType, data.randomStranger);
   }
