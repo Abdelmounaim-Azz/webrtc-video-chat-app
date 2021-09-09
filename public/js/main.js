@@ -53,9 +53,13 @@ personalCodeVideoButton.addEventListener("click", () => {
   webRTCHandler.sendPreOffer(callType, calleePersonalCode);
 });
 const strangerChatBtn = document.getElementById("stranger_chat_button");
-strangerChatBtn.addEventListener("click", () => {});
+strangerChatBtn.addEventListener("click", () => {
+  strangerUtils.getSIdAndConn(constants.callType.CHAT_STRANGER);
+});
 const strangerVideoBtn = document.getElementById("stranger_video_button");
-strangerVideoBtn.addEventListener("click", () => {});
+strangerVideoBtn.addEventListener("click", () => {
+  strangerUtils.getSIdAndConn(constants.callType.VIDEO_STRANGER);
+});
 const checkbox = document.getElementById("allow_strangers_checkbox");
 checkbox.addEventListener("click", () => {
   const strangerState = store.getState().allowConnectionsFromStrangers;

@@ -89,6 +89,20 @@ io.on("connection", (socket) => {
     }
     console.log(connectedPeersStranger);
   });
+  socket.on("get-stranger-random", () => {
+    let randomStranger;
+    const filteredStrangers = connectedPeersStranger.filter(
+      (peerSocketId) => peerSocketId !== socket.id
+    );
+    if (filteredStrangers.length > 0) {
+      randomStranger =
+        filteredStrangers[Math.floor(Math.random() * filteredStrangers.length)];
+    } else {
+      randomStranger = null;
+    }
+    const data = {randomStranger};
+    io.to(socket.id).emit("stranger-random-socket-id", randomStranger);
+  });
   socket.on("disconnect", () => {
     console.log("user disconnected");
 
