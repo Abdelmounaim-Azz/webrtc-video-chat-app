@@ -101,7 +101,7 @@ io.on("connection", (socket) => {
       randomStranger = null;
     }
     const data = {randomStranger};
-    io.to(socket.id).emit("stranger-random-socket-id", randomStranger);
+    io.to(socket.id).emit("stranger-random-socket-id", data);
   });
   socket.on("disconnect", () => {
     console.log("user disconnected");

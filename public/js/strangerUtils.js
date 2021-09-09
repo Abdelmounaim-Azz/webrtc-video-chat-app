@@ -1,4 +1,5 @@
 import * as wss from "./wss.js";
+import * as webRTCHandler from "./webRTCHandler.js";
 let strangerCallType;
 export const strangerConnStatus = (status) => {
   const data = {status};
@@ -9,5 +10,7 @@ export const getSIdAndConn = (callType) => {
   wss.getStrangerSocketId();
 };
 export const connectWithStranger = (data) => {
-  console.log(data);
+  if (data.randomStranger) {
+    webRTCHandler.sendPreOffer(strangerCallType, data.randomStranger);
+  }
 };
