@@ -100,11 +100,17 @@ export const removeAllDialogs = () => {
 };
 
 export const showCallElements = (callType) => {
-  if (callType === constants.callType.CHAT_PERSONAL_CODE) {
+  if (
+    callType === constants.callType.CHAT_PERSONAL_CODE ||
+    callType === constants.callType.CHAT_STRANGER
+  ) {
     showChatCallElements();
   }
 
-  if (callType === constants.callType.VIDEO_PERSONAL_CODE) {
+  if (
+    callType === constants.callType.VIDEO_PERSONAL_CODE ||
+    callType === constants.callType.VIDEO_STRANGER
+  ) {
     showVideoCallElements();
   }
 };
@@ -231,10 +237,10 @@ export const updateUIAfterHangUp = (callType) => {
 
   removeAllDialogs();
 };
-export const updateStrangerCheckBox=(status)=>{
+export const updateStrangerCheckBox = (status) => {
   const chexkBoxImg = document.getElementById("allow_strangers_checkbox_image");
-  status ? showElement(chexkBoxImg) : hideElement(chexkBoxImg)
-}
+  status ? showElement(chexkBoxImg) : hideElement(chexkBoxImg);
+};
 // ui helper functions
 
 const enableDashboard = () => {
