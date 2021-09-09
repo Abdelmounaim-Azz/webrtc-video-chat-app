@@ -1,4 +1,5 @@
 import * as store from "./store.js";
+import * as strangerUtils from "./strangerUtils.js";
 import * as wss from "./wss.js";
 import * as webRTCHandler from "./webRTCHandler.js";
 import * as constants from "./constants.js";
@@ -51,7 +52,17 @@ personalCodeVideoButton.addEventListener("click", () => {
 
   webRTCHandler.sendPreOffer(callType, calleePersonalCode);
 });
-
+const strangerChatBtn = document.getElementById("stranger_chat_button");
+strangerChatBtn.addEventListener("click", () => {});
+const strangerVideoBtn = document.getElementById("stranger_video_button");
+strangerVideoBtn.addEventListener("click", () => {});
+const checkbox = document.getElementById("allow_strangers_checkbox");
+checkbox.addEventListener("click", () => {
+  const strangerState = store.getState().allowConnectionsFromStrangers;
+  ui.updateStrangerCheckBox(!strangerState);
+  store.setAllowConnectionsFromStrangers(!strangerState);
+  strangerUtils.strangerConnStatus(!strangerState);
+});
 // event listeners for video call buttons
 
 const micButton = document.getElementById("mic_button");

@@ -9,7 +9,6 @@ export const registerSocketEvents = (socket) => {
   socketIO = socket;
 
   socket.on("connect", () => {
-    console.log("succesfully connected to socket.io server");
     store.setSocketId(socket.id);
     ui.updatePersonalCode(socket.id);
   });
@@ -22,7 +21,6 @@ export const registerSocketEvents = (socket) => {
     webRTCHandler.handlePreOfferAnswer(data);
   });
   socket.on("user-hang-up", () => {
-    console.log("user hang up event received by client");
     webRTCHandler.handleConnectedUserHangUp();
   });
   socket.on("webRTC-signaling", (data) => {
@@ -43,7 +41,6 @@ export const registerSocketEvents = (socket) => {
 };
 
 export const sendPreOffer = (data) => {
-  console.log("emmiting to server pre offer event");
   socketIO.emit("pre-offer", data);
 };
 
@@ -56,6 +53,8 @@ export const sendDataUsingWebRTCSignaling = (data) => {
 };
 
 export const sendUserHangUp = (data) => {
-  console.log("send user hang up wss data  emitted to server ");
   socketIO.emit("user-hang-up", data);
 };
+export const changeStrangerConnStatus=(data)=>{
+  socketIO.emit('stranger-conn-status',data)
+}

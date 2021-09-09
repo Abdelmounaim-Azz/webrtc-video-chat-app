@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 let connectedPeers = [];
+let connectedPeersStranger = [];
 
 io.on("connection", (socket) => {
   connectedPeers.push(socket.id);
@@ -76,6 +77,18 @@ io.on("connection", (socket) => {
       io.to(connectedUserSocketId).emit("user-hang-up");
     }
   });
+  socket.on("stranger-conn-status", (data) => {
+    const {status} = data;
+    if (status) {
+      connectedPeersStranger.push(socket.id);
+    } else {
+      const newConnPeersStranger = connectedPeersStranger.filter(
+        (peerSocketId) => peerSocketId !== socket.id
+      );
+      connectedPeersStranger = newConnPeersStranger;
+    }
+    console.log(connectedPeersStranger);
+  });
   socket.on("disconnect", () => {
     console.log("user disconnected");
 
@@ -84,7 +97,10 @@ io.on("connection", (socket) => {
     );
 
     connectedPeers = newConnectedPeers;
-    console.log(connectedPeers);
+    const newConnPeersStranger = connectedPeersStranger.filter(
+      (peerSocketId) => peerSocketId !== socket.id
+    );
+    connectedPeersStranger = newConnPeersStranger;
   });
 });
 

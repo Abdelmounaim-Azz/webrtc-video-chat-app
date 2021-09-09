@@ -231,6 +231,10 @@ export const updateUIAfterHangUp = (callType) => {
 
   removeAllDialogs();
 };
+export const updateStrangerCheckBox=(status)=>{
+  const chexkBoxImg = document.getElementById("allow_strangers_checkbox_image");
+  status ? showElement(chexkBoxImg) : hideElement(chexkBoxImg)
+}
 // ui helper functions
 
 const enableDashboard = () => {
